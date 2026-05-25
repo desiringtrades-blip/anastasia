@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+}
+
+video{
+    width:100vw;
+    height:100vh;
+    object-fit:cover;
+}
+</style>
+</head>
+<body>
+
+<video id="video" autoplay controls>
+    <source src="https://files.catbox.moe/snx3bq.mp4" type="video/mp4">
+</video>
+
+<script>
+const video = document.getElementById("video");
+
+/*
+WHEN ONE SCREEN STARTS PLAYING
+→ TELL OTHER SCREENS TO PLAY
+*/
+video.addEventListener("play", () => {
+    localStorage.setItem("syncPlay", Date.now());
+});
+
+/*
+LISTEN FOR PLAY SIGNAL
+*/
+window.addEventListener("storage", (event) => {
+
+    if(event.key === "syncPlay"){
+
+        if(video.paused){
+            video.play();
+        }
+
+    }
+});
+</script>
+
+</body>
+</html>
